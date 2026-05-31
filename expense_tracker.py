@@ -138,27 +138,26 @@ def save_expenses(expenses):
     write_json_file(EXPENSES_FILE, expenses)
 
 # ---------------- BUDGET ----------------
-    def compute_remaining_month(expenses, monthly_budget):
-        month_prefix = datetime.date.today().isoformat()[:7]
-        spent = sum(e["amount"] for e in expenses if e["date"].startswith(month_prefix))
-        return round(monthly_budget - spent, 2)
+def compute_remaining_month(expenses, monthly_budget):
+    month_prefix = datetime.date.today().isoformat()[:7]
+    spent = sum(e["amount"] for e in expenses if e["date"].startswith(month_prefix))
+    return round(monthly_budget - spent, 2)
 
-    def ask_monthly_budget(expenses):
-        while True:
-            try:
-                b = float(input("Enter monthly budget (₹): ").strip())
-                break
-            except:
-                print("❌ Invalid input!")
+def ask_monthly_budget(expenses):
+    while True:
+        try:
+            b = float(input("Enter monthly budget (₹): ").strip())
+            break
+        except:
+            print("❌ Invalid input!")
 
-        save_budget(b)
-        remaining = compute_remaining_month(expenses, b)
-        return b, remaining
+    save_budget(b)
+    remaining = compute_remaining_month(expenses, b)
+    return b, remaining
 
-    def reset_monthly_budget(expenses):
-        print("\n🔄 RESET MONTHLY BUDGET")
-        return ask_monthly_budget(expenses)
-
+def reset_monthly_budget(expenses):
+    print("\n🔄 RESET MONTHLY BUDGET")
+    return ask_monthly_budget(expenses)
 # ---------------- GRAPH ----------------
 def graph_categories(expenses):
     month = datetime.date.today().isoformat()[:7]
